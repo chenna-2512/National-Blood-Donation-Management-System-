@@ -8,7 +8,7 @@ const Readmore = () => {
   return (
     <>
     <Heading/>
-        <div className="my-[4%] p-8 font-sans">
+        <div className="my-24 md:my-20 p-8 font-sans">
         <h1 className="text-3xl font-bold text-center mb-6">Why Blood Donation Matters</h1>
 
         <div className="text-lg space-y-4">

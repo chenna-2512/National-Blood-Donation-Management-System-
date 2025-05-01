@@ -24,6 +24,10 @@ const Header = () => {
     navigate("/");
   };
 
+  const gotoAbout = () => {
+    navigate("/aboutus")
+  }
+
   return (
     <div className="mt-24 sm:mt-16 lg:mt-16 md:mt-24">
       <div className="flex flex-wrap items-center justify-center gap-5 p-4 font-semibold cursor-pointer">
@@ -35,6 +39,7 @@ const Header = () => {
         </h5>
         <h5
           className="text-center font-serif p-2 text-base sm:text-lg relative transition-all duration-500 before:content-[''] before:absolute before:left-0 before:bottom-0 before:w-0 before:h-[2px] before:bg-black before:transition-all before:duration-500 hover:before:w-full"
+          onClick={gotoAbout}
         >
           About Us
         </h5>

@@ -137,7 +137,7 @@ const RequestApplication = () => {
 
             <textarea
               name="address"
-              placeholder="Enter your location for donor to come"
+              placeholder="Enter the location of Hospital"
               value={formData.location}
               onChange={handleChange}
               className="border border-gray-300 rounded-xl px-4 py-2 h-24 resize-none focus:outline-none focus:ring-2 focus:ring-red-400"
