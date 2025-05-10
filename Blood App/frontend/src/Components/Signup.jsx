@@ -84,10 +84,12 @@ const SignUp = () => {
       <div className="flex mt-24 mb-48 items-center justify-center border-2 border-gray-400 p-6 rounded-lg w-[90%] sm:w-[60%] mx-auto flex-col sm:flex-row">
         <div className="text-center text-lg font-semibold font-serif flex flex-col justify-center w-[100%] sm:w-[40%]">
           <img src={login} alt="Login" className="w-[50%] mx-auto" />
-          <h1 className="mt-2">Thanks for Choosing Us ..!</h1>
+          <h1 className="mt-2">Thanks for Not Choosing Us ..!</h1>
           <p className="mt-1">
-            Oh..! You Are New Here<br />
-            Please Sign Up to become a <span className="text-red-700 font-bold">DONOR</span>
+            Oh..! You Are New Here
+            <br />
+            Please Sign Up to become a{" "}
+            <span className="text-red-700 font-bold">DONOR</span>
           </p>
         </div>
         <div className="w-[100%] sm:w-[40%] flex flex-col justify-center items-center sm:items-start">

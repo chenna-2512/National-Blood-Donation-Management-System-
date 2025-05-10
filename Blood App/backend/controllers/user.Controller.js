@@ -1,4 +1,4 @@
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import { User } from "../models/email.Model.js"
 
 export const postEmail = async(req,res) => {
