@@ -57,7 +57,7 @@ const Application = () => {
         return;
       }
 
-      const checkResponse = await fetch(`http://localhost:3002/getdetails?email=${encodeURIComponent(loggedEmail)}`);
+      const checkResponse = await fetch(`https://national-blood-donation-management-system-y10q.onrender.com/getdetails?email=${encodeURIComponent(loggedEmail)}`);
       const checkData = await checkResponse.json();
 
       if (checkData.exists) {
@@ -70,7 +70,7 @@ const Application = () => {
         lblooddonate: formData.lblooddonate ? new Date(formData.lblooddonate).toISOString() : null,
       };
 
-      const response = await fetch("http://localhost:3002/postdetails", {
+      const response = await fetch("https://national-blood-donation-management-system-y10q.onrender.com/postdetails", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(updatedFormData),

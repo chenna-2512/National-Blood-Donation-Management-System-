@@ -19,7 +19,8 @@ const RequestHistory = () => {
   // Load clicked states per user
   useEffect(() => {
     if (loggedEmail) {
-      const storedClicks = JSON.parse(localStorage.getItem(`clickedStates_${loggedEmail}`)) || {};
+      const storedClicks =
+        JSON.parse(localStorage.getItem(`clickedStates_${loggedEmail}`)) || {};
       setClickedStates(storedClicks);
     }
   }, [loggedEmail]);
@@ -36,7 +37,7 @@ const RequestHistory = () => {
       try {
         const encodedEmail = encodeURIComponent(loggedEmail);
         const response = await fetch(
-          `http://localhost:3002/getRequestor?requestorEmail=${encodedEmail}`
+          `https://national-blood-donation-management-system-y10q.onrender.com/getRequestor?requestorEmail=${encodedEmail}`
         );
 
         const data = await response.json();
@@ -57,7 +58,10 @@ const RequestHistory = () => {
     const updatedStates = { ...clickedStates, [email]: true };
     setClickedStates(updatedStates);
     if (loggedEmail) {
-      localStorage.setItem(`clickedStates_${loggedEmail}`, JSON.stringify(updatedStates));
+      localStorage.setItem(
+        `clickedStates_${loggedEmail}`,
+        JSON.stringify(updatedStates)
+      );
     }
   };
 
@@ -106,12 +110,17 @@ const RequestHistory = () => {
         TEMPLATE_NO_ID,
         donor.name,
         donor.email,
-        `Hi ${donor.name},\n\nRegarding your recent blood donation request:\n${noMessages[donor.email]}\n\nThank you for being there!\n- ${loggedEmail}`
+        `Hi ${donor.name},\n\nRegarding your recent blood donation request:\n${
+          noMessages[donor.email]
+        }\n\nThank you for being there!\n- ${loggedEmail}`
       );
-      await axios.put("http://localhost:3002/updateSocialize", {
-        email: donor.email,
-        socialize: "yes",
-      });
+      await axios.put(
+        "https://national-blood-donation-management-system-y10q.onrender.com/updateSocialize",
+        {
+          email: donor.email,
+          socialize: "yes",
+        }
+      );
       alert("✅ Feedback email sent!");
       updateClickedStates(donor.email);
     } catch (error) {
@@ -136,12 +145,24 @@ const RequestHistory = () => {
               className="bg-white shadow-md rounded-2xl p-6 transition-transform transform hover:scale-105 flex flex-col justify-between"
             >
               <div>
-                <h3 className="text-xl font-semibold text-gray-800 mb-2">{donor.name}</h3>
-                <p className="text-sm text-gray-600"><strong>Email:</strong> {donor.email}</p>
-                <p className="text-sm text-gray-600"><strong>Phone:</strong> {donor.phoneno}</p>
-                <p className="text-sm text-gray-600"><strong>Weight:</strong> {donor.weight} kg</p>
-                <p className="text-sm text-gray-600"><strong>Height:</strong> {donor.height} cm</p>
-                <p className="text-sm text-gray-600 mt-2 italic font-semibold">&quot;{donor.message}&quot;</p>
+                <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                  {donor.name}
+                </h3>
+                <p className="text-sm text-gray-600">
+                  <strong>Email:</strong> {donor.email}
+                </p>
+                <p className="text-sm text-gray-600">
+                  <strong>Phone:</strong> {donor.phoneno}
+                </p>
+                <p className="text-sm text-gray-600">
+                  <strong>Weight:</strong> {donor.weight} kg
+                </p>
+                <p className="text-sm text-gray-600">
+                  <strong>Height:</strong> {donor.height} cm
+                </p>
+                <p className="text-sm text-gray-600 mt-2 italic font-semibold">
+                  &quot;{donor.message}&quot;
+                </p>
               </div>
 
               <div className="pt-6">
@@ -181,7 +202,9 @@ const RequestHistory = () => {
                       rows={4}
                       placeholder="Please provide a reason..."
                       value={noMessages[donor.email] || ""}
-                      onChange={(e) => handleTextareaChange(donor.email, e.target.value)}
+                      onChange={(e) =>
+                        handleTextareaChange(donor.email, e.target.value)
+                      }
                     />
                     <button
                       onClick={() => handleNoSubmit(donor)}

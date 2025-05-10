@@ -25,7 +25,7 @@ const Profile = () => {
 
     const fetchProfile = async () => {
       try {
-        const url = `http://localhost:3002/getdetails?email=${encodeURIComponent(
+        const url = `https://national-blood-donation-management-system-y10q.onrender.com/getdetails?email=${encodeURIComponent(
           loggedEmail
         )}`;
         const response = await fetch(url, {
@@ -84,7 +84,7 @@ const Profile = () => {
     console.log("Sending data to the backend:", editableData);
 
     try {
-      const response = await fetch("http://localhost:3002/updateprofile", {
+      const response = await fetch("https://national-blood-donation-management-system-y10q.onrender.com/updateprofile", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

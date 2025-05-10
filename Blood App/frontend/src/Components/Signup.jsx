@@ -54,7 +54,7 @@ const SignUp = () => {
       };
 
       try {
-        const response = await fetch("http://localhost:3002/postuser", {
+        const response = await fetch("https://national-blood-donation-management-system-y10q.onrender.com/postuser", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

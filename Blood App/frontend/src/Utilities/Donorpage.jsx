@@ -24,7 +24,7 @@ const Donorpage = () => {
 
     const fetchData = async () => {
       try {
-        const response = await fetch(`http://localhost:3002/getalldetails`, {
+        const response = await fetch(`https://national-blood-donation-management-system-y10q.onrender.com/getalldetails`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -75,7 +75,7 @@ const Donorpage = () => {
     const token = localStorage.getItem("token");
     const loggedEmail = localStorage.getItem("userEmail");
 
-    fetch(`http://localhost:3002/getalldetails`, {
+    fetch(`https://national-blood-donation-management-system-y10q.onrender.com/getalldetails`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

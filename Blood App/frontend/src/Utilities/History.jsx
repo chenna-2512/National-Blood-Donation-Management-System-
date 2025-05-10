@@ -59,7 +59,7 @@ const History = () => {
       setLoading(true);
       try {
         const response = await fetch(
-          `http://localhost:3002/getrequest?donorEmail=${loggedEmail}`,
+          `https://national-blood-donation-management-system-y10q.onrender.com/getrequest?donorEmail=${loggedEmail}`,
           {
             method: "GET",
             headers: {
@@ -110,7 +110,7 @@ const History = () => {
     const socializeValue = showSocialize ? "no" : "yes";
 
     try {
-      await axios.put("http://localhost:3002/updateMessage", {
+      await axios.put("https://national-blood-donation-management-system-y10q.onrender.com/updateMessage", {
         email: loggedEmail,
         requestorEmail,
         message,

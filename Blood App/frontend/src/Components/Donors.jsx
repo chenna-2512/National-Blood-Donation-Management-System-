@@ -25,7 +25,7 @@ const Donors = () => {
     }
 
     try {
-      await axios.put("http://localhost:3002/updateSocialize", {
+      await axios.put("https://national-blood-donation-management-system-y10q.onrender.com/updateSocialize", {
         email: donor.email,
         socialize: "block",
       });
