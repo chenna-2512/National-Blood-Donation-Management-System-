@@ -31,7 +31,7 @@ export const loginVerify = async (req,res) => {
 
 
         const token = jwt.sign({ email: email }, process.env.SECRET_KEY, {
-            expiresIn: "60",
+            expiresIn: "60min",
         });
         console.log(token);
         const LoggedUser = {

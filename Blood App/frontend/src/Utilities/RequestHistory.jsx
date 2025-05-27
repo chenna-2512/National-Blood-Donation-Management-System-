@@ -88,6 +88,13 @@ const RequestHistory = () => {
         donor.email,
         `Hi ${donor.name},\n\nThank you so much for your blood donation. You're a lifesaver! ❤️\n\nFrom, ${loggedEmail}`
       );
+      await axios.put(
+        "https://national-blood-donation-management-system-y10q.onrender.com/updatedate",
+        {
+          email: donor.email,
+          lblooddonate: new Date().toISOString().split("T")[0], // Format: YYYY-MM-DD
+        }
+      );
       alert("✅ Thank you email sent!");
       updateClickedStates(donor.email);
     } catch (error) {

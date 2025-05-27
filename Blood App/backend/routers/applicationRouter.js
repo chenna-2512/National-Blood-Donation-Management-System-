@@ -1,5 +1,5 @@
 import express from "express";
-import { getAllApplications, getApplication, getRequestor, postApplication, updateMessage, updateProfile, updateSocialize } from "../controllers/application.Controller.js";
+import { getAllApplications, getApplication, getRequestor, postApplication, updateLbloodDate, updateMessage, updateProfile, updateSocialize } from "../controllers/application.Controller.js";
 
 const approuter = express.Router();
 approuter.post("/postdetails",postApplication);
@@ -9,4 +9,5 @@ approuter.put("/updateSocialize",updateSocialize);
 approuter.put("/updateMessage", updateMessage);
 approuter.get("/getRequestor", getRequestor);
 approuter.put("/updateprofile",updateProfile);
+approuter.put("/updatedate",updateLbloodDate);
 export default approuter;

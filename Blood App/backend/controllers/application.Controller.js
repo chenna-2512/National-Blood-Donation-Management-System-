@@ -267,4 +267,37 @@ export const getRequestor = async (req, res) => {
       });
     }
   };
+
+  export const updateLbloodDate = async(req,res) => {
+    try{
+        const { email , lblooddonate } = req.body;
+        if(!email){
+            return res.status(400).json({
+                message:"Please Check Once"
+            })
+        };
+        const user = await Application.findOne({ email });
+        if(!user){
+            res.status(400).json({
+                message : 'User Not Found'
+            })
+        };
+
+        user.lblooddonate = lblooddonate;
+        
+        await user.save();
+
+        res.status(200).json({
+            message : "Updated Successfully",
+            data : user,
+        })
+
+    }
+    catch(error){
+        console.error("Error in Requesting:", error);
+        res.status(500).json({
+            message: "An error occurred while requesting",
+        });
+    }
+}
   
