@@ -25,6 +25,7 @@ const Application = () => {
       setFormData((prevFormData) => ({
         ...prevFormData,
         email: userEmail,
+        socialize : "No",
         requestorEmail : "NA",
         message : "NA",
       }));
@@ -104,15 +105,15 @@ const Application = () => {
   }
 
   return (
-    <div>
+     <div>
       <Heading />
-      <h1 className="text-lg mt-[5%] font-serif font-semibold text-center p-2 underline">
+      <h1 className="text-2xl font-serif font-bold text-center p-4 underline decoration-2 underline-offset-4 text-red-700">
         Application Form for Blood & Platelets Donation
       </h1>
 
-      <div className="bg-white shadow-lg mb-[4%] p-[2%] rounded-xl w-[50%] mx-auto border-2 border-gray-300 mt-6">
-        <div className="flex flex-col gap-6 justify-center">
-          {[ 
+      <div className="bg-white shadow-2xl mb-10 p-8 rounded-2xl w-[90%] max-w-2xl mx-auto border border-gray-300 mt-2 mb-18">
+        <div className="flex flex-col gap-6">
+          {[
             { label: "Full Name", type: "text", name: "name" },
             { label: "Date of Birth", type: "date", name: "dob" },
             { label: "Mobile Number", type: "text", name: "phoneno" },
@@ -123,17 +124,28 @@ const Application = () => {
             { label: "Height", type: "text", name: "height" },
             { label: "Last Time Blood Donation Date", type: "date", name: "lblooddonate" }
           ].map(({ label, type, name }) => (
-            <div key={name} className="flex gap-4 items-center justify-between p-3 bg-gray-100 rounded-lg shadow-sm hover:shadow-md transition">
-              <label htmlFor={name} className="text-lg font-semibold text-gray-700">{label}</label>
-              <input type={type} id={name} name={name} value={formData[name]}
-                className="text-lg focus:outline-none focus:ring-0 border-b-2 border-gray-400 w-[80%] bg-transparent px-2 py-1"
-                onChange={handleChange} />
+            <div key={name} className="flex flex-col gap-2">
+              <label htmlFor={name} className="text-base font-medium text-gray-800">{label}</label>
+              <input
+                type={type}
+                id={name}
+                name={name}
+                value={formData[name]}
+                onChange={handleChange}
+                className="bg-gray-100 rounded-md px-4 py-2 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-red-400 transition"
+              />
             </div>
           ))}
 
-          <div className="flex gap-4 items-center justify-between p-3 bg-gray-100 rounded-lg shadow-sm hover:shadow-md transition">
-            <label htmlFor="gender" className="text-lg font-semibold text-gray-700">Gender</label>
-            <select name="gender" id="gender" value={formData.gender} className="w-[80%] p-2 border-b-2 focus:outline-none focus:ring-0" onChange={handleChange}>
+          <div className="flex flex-col gap-2">
+            <label htmlFor="gender" className="text-base font-medium text-gray-800">Gender</label>
+            <select
+              name="gender"
+              id="gender"
+              value={formData.gender}
+              onChange={handleChange}
+              className="bg-gray-100 rounded-md px-4 py-2 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-red-400"
+            >
               <option>Select Your Gender</option>
               <option value="male">Male</option>
               <option value="female">Female</option>
@@ -141,9 +153,15 @@ const Application = () => {
             </select>
           </div>
 
-          <div className="flex flex-col gap-2 p-3 bg-gray-100 rounded-lg shadow-sm hover:shadow-md transition w-full">
-            <label htmlFor="bloodgroup" className="text-lg font-semibold text-gray-700">Blood Group</label>
-            <select name="bloodgroup" id="bloodgroup" value={formData.bloodgroup} className="w-full p-1 border-b-2 focus:outline-none focus:ring-0" onChange={handleChange}>
+          <div className="flex flex-col gap-2">
+            <label htmlFor="bloodgroup" className="text-base font-medium text-gray-800">Blood Group</label>
+            <select
+              name="bloodgroup"
+              id="bloodgroup"
+              value={formData.bloodgroup}
+              onChange={handleChange}
+              className="bg-gray-100 rounded-md px-4 py-2 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-red-400"
+            >
               <option>Select Your Blood Group</option>
               {bloodGroups.map((item) => (
                 <option key={item} value={item}>{item}</option>
@@ -151,48 +169,50 @@ const Application = () => {
             </select>
           </div>
 
-          <div className="flex gap-4 items-center justify-between p-3 bg-gray-100 rounded-lg">
-            <label htmlFor="typeofdonar" className="text-lg font-semibold text-gray-700">Type of Donor</label>
-            <select name="typeofdonar" id="typeofdonar" value={formData.typeofdonar} onChange={handleChange}
-              className="w-[80%] p-2 border-b-2 focus:outline-none">
-              <option>Select Type</option>
-              <option value="normal">Normal</option>
-              <option value="emergency">Emergency</option>
-            </select>
+          {[
+            { label: "Type of Donor", name: "typeofdonar", options: ["normal", "emergency"] },
+            { label: "Willing to donate Platelets?", name: "platelets", options: ["yes", "no"] },
+            // { label: "Would you like to socialize with other donors?", name: "socialize", options: ["yes", "no"] }
+          ].map(({ label, name, options }) => (
+            <div key={name} className="flex flex-col gap-2">
+              <label htmlFor={name} className="text-base font-medium text-gray-800">{label}</label>
+              <select
+                name={name}
+                id={name}
+                value={formData[name]}
+                onChange={handleChange}
+                className="bg-gray-100 rounded-md px-4 py-2 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-red-400"
+              >
+                <option>Select Option</option>
+                {options.map((opt) => (
+                  <option key={opt} value={opt}>{opt.charAt(0).toUpperCase() + opt.slice(1)}</option>
+                ))}
+              </select>
+            </div>
+          ))}
+
+          <div className="flex flex-col gap-2">
+            <label htmlFor="address" className="text-base font-medium text-gray-800">Address</label>
+            <textarea
+              name="address"
+              id="address"
+              rows="3"
+              placeholder="Enter your address"
+              value={formData.address}
+              onChange={handleChange}
+              className="bg-gray-100 rounded-md px-4 py-2 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-red-400 resize-none"
+            />
           </div>
 
-          <div className="flex gap-4 items-center justify-between p-3 bg-gray-100 rounded-lg">
-            <label htmlFor="platelets" className="text-lg font-semibold text-gray-700">Willing to donate Platelets?</label>
-            <select name="platelets" id="platelets" value={formData.platelets} onChange={handleChange}
-              className="w-[80%] p-2 border-b-2 focus:outline-none">
-              <option>Select Option</option>
-              <option value="yes">Yes</option>
-              <option value="no">No</option>
-            </select>
-          </div>
-
-          <div className="flex gap-4 items-center justify-between p-3 bg-gray-100 rounded-lg">
-            <label htmlFor="socialize" className="text-lg font-semibold text-gray-700">Would you like to socialize with other donors?</label>
-            <select name="socialize" id="socialize" value={formData.socialize} onChange={handleChange}
-              className="w-[80%] p-2 border-b-2 focus:outline-none">
-              <option>Select Option</option>
-              <option value="yes">Yes</option>
-              <option value="no">No</option>
-            </select>
-          </div>
-
-          <div className="flex gap-4 items-center p-3 bg-gray-100 rounded-lg shadow-sm hover:shadow-md transition">
-            <label htmlFor="address" className="text-lg font-semibold text-gray-700">Address</label>
-            <textarea name="address" placeholder="Address" className="mt-2 bg-white p-2 text-black w-full"
-              rows="3" value={formData.address} onChange={handleChange}></textarea>
-          </div>
-
-          <button className="mt-4 bg-black text-white w-[20%] text-lg font-medium py-2 rounded-lg hover:bg-red-700 transition"
-            onClick={postDetails}>
+          <button
+            className="self-center mt-6 bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-8 rounded-full transition duration-300"
+            onClick={postDetails}
+          >
             Submit
           </button>
         </div>
       </div>
+
       <Footer1 />
     </div>
   );
