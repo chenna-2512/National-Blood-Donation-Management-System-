@@ -24,13 +24,16 @@ const Donorpage = () => {
 
     const fetchData = async () => {
       try {
-        const response = await fetch(`https://national-blood-donation-management-system-y10q.onrender.com/getalldetails`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const response = await fetch(
+          `https://national-blood-donation-management-system-y10q.onrender.com/getalldetails`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
         const data = await response.json();
         const donorData = data.data;
@@ -41,8 +44,7 @@ const Donorpage = () => {
           const filtered = donorList
             .filter(
               (d) =>
-                d.email !== loggedEmail &&
-                d.socialize === "yes" // ✅ Only socialize=YES
+                d.email !== loggedEmail && d.socialize?.toLowerCase() === "yes" // ✅ Only socialize=YES
             )
             .sort((a, b) => {
               const donorTypeOrder = { emergency: 0, normal: 1 };
@@ -75,23 +77,23 @@ const Donorpage = () => {
     const token = localStorage.getItem("token");
     const loggedEmail = localStorage.getItem("userEmail");
 
-    fetch(`https://national-blood-donation-management-system-y10q.onrender.com/getalldetails`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    })
+    fetch(
+      `https://national-blood-donation-management-system-y10q.onrender.com/getalldetails`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         let donorList = Array.isArray(data.data) ? data.data : [data.data];
 
-        let filtered = donorList
-          .filter(
-            (d) =>
-              d.email !== loggedEmail &&
-              d.socialize === "Yes"
-          );
+        let filtered = donorList.filter(
+          (d) => d.email !== loggedEmail && d.socialize === "Yes"
+        );
 
         if (group !== "All") {
           const normalizedGroup = group.trim().toUpperCase();
