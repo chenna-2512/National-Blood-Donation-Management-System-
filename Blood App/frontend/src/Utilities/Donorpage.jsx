@@ -90,7 +90,7 @@ const Donorpage = () => {
           .filter(
             (d) =>
               d.email !== loggedEmail &&
-              d.socialize === "yes"
+              d.socialize === "Yes"
           );
 
         if (group !== "All") {
