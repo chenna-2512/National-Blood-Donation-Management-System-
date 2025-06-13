@@ -37,7 +37,7 @@ const Header2 = () => {
               ${showProfile ? "before:w-full text-black font-bold" : "before:w-0 text-gray-600"}`}
             onClick={goToProfile}
           >
-            Your Profile
+            Profile
           </h5>
 
           <h5
@@ -46,7 +46,7 @@ const Header2 = () => {
               ${!showProfile && !showHistory ? "before:w-full text-black font-bold" : "before:w-0 text-gray-600"}`}
             onClick={goToApplicationForm}
           >
-            Application Form
+            Application
           </h5>
 
           <h5
@@ -55,7 +55,7 @@ const Header2 = () => {
               ${showHistory ? "before:w-full text-black font-bold" : "before:w-0 text-gray-600"}`}
             onClick={gotoHistory}
           >
-            Blood Donation Waitlist & History
+            Blood Donation History
           </h5>
 
         </div>
