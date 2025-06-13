@@ -21,11 +21,11 @@ const Header3 = () => {
     <div>
       <div className="mt-24 md:mt-24 lg:mt-16">
         <div className="flex items-center justify-center gap-5 p-2 font-semibold cursor-pointer">
-            <h5 className="text-center font-serif p-1 text-lg relative transition-all duration-500 before:content-[''] before:absolute before:left-0 before:bottom-0 before:w-0 before:h-[2px] before:bg-black before:transition-all before:duration-1500 hover:before:w-full"
+            <h5 className="text-center font-serif p-1 text-sm md:text-lg relative transition-all duration-500 before:content-[''] before:absolute before:left-0 before:bottom-0 before:w-0 before:h-[2px] before:bg-black before:transition-all before:duration-1500 hover:before:w-full"
             onClick={gotoDonors}>
                 Blood Donors
             </h5>
-            <h5 className="text-center font-serif p-1 text-lg relative transition-all duration-500 before:content-[''] before:absolute before:left-0 before:bottom-0 before:w-0 before:h-[2px] before:bg-black before:transition-all before:duration-1500 hover:before:w-full"
+            <h5 className="text-center font-serif p-1 text-sm md:text-lg relative transition-all duration-500 before:content-[''] before:absolute before:left-0 before:bottom-0 before:w-0 before:h-[2px] before:bg-black before:transition-all before:duration-1500 hover:before:w-full"
             onClick={gotoRequestHistory}>
                 Your Request History
             </h5>

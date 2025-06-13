@@ -150,7 +150,7 @@ const Donorpage = () => {
       </div>
 
       {filteredDonors.length > 0 ? (
-        <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mb-16">
           {filteredDonors.map((donor, index) => (
             <div
               key={index}
