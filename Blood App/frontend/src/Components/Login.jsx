@@ -71,7 +71,7 @@ const Login = () => {
             Sign In
           </button>
           <button
-            className="mt-4 p-2 border-b-3 font-semibold cursor-pointer text-black w-[50%] sm:w-[50%]"
+            className="mt-4 p-2 border-b-3 font-semibold md:text-lg text-sm cursor-pointer text-black lg:w-[50%] w-[60%]"
             onClick={() => navigate("/signup")}
           >
             New User? Sign Up

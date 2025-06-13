@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import login from "../assets/loginlogo.png";
-import emailjs from "emailjs-com";
+import emailjs from "@emailjs/browser";
 import Footer1 from "../Utilities/Footer1";
 import Heading from "../Utilities/Heading";
 import { useState } from "react";
@@ -21,29 +21,34 @@ const SignUp = () => {
   };
 
   const handleOtp = async () => {
-    if (!email.trim() || !password.trim()) {
-      toast.error("Please enter your email and password!");
-      return;
-    }
+  if (!email.trim() || !password.trim()) {
+    toast.error("Please enter your email and password!");
+    return;
+  }
 
-    const newOtp = generateOtp();
-    setGeneratedOtp(newOtp);
+  const newOtp = generateOtp();
+  setGeneratedOtp(newOtp);
 
-    try {
-      await emailjs.send(
-        "service_tth3vuk",
-        "template_rilhxya",
-        { to_email: email, otp: newOtp },
-        "KHeqyA1SqaXHSe7vT"
-      );
-      setShowOtp(true);
-      toast.success("OTP sent successfully!");
-    } catch (error) {
-      console.error("Failed to send OTP:", error);
-      toast.error("Failed to send OTP. Please try again.");
-    }
+  const templateParams = {
+    to_email: email,
+    otp: newOtp
   };
 
+  try {
+    const result = await emailjs.send(
+      "service_tth3vuk",       // ✅ your EmailJS service ID
+      "template_rilhxya",      // ✅ your EmailJS template ID
+      templateParams,
+      "KHeqyA1SqaXHSe7vT"      // ✅ your EmailJS PUBLIC KEY only
+    );
+    console.log("Email sent: ", result.text);
+    setShowOtp(true);
+    toast.success("OTP sent successfully!");
+  } catch (err) {
+    console.error("Failed to send OTP:", err);
+    toast.error("Failed to send OTP. Try again.");
+  }
+};
   const otpHandle = async () => {
     if (otp === generatedOtp) {
       toast.success("OTP verified successfully! Now go to Login");
@@ -112,7 +117,7 @@ const SignUp = () => {
             Get OTP
           </button>
           <button
-            className="mt-2 p-2 border-b-3 font-semibold cursor-pointer text-black w-[50%] sm:w-[50%]"
+            className="mt-2 p-2 border-b-3 font-semibold cursor-pointer text-sm text-black md:w-[50%] w-[70%]"
             onClick={() => navigate("/login")}
           >
             Existing User? Login
@@ -127,7 +132,7 @@ const SignUp = () => {
                 onChange={(e) => setOtp(e.target.value)}
               />
               <button
-                className="mt-2 bg-black p-2 text-white rounded-lg hover:bg-red-700 w-[80%] sm:w-[50%] cursor-pointer"
+                className="mt-2 bg-black p-2 text-sm text-white rounded-lg hover:bg-red-700 w-full cursor-pointer"
                 onClick={otpHandle}
               >
                 Validate OTP
