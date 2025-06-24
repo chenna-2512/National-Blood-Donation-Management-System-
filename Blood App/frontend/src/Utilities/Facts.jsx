@@ -1,45 +1,96 @@
-import { useNavigate } from "react-router-dom";
-import img from "../assets/Logo.jpg";
+import { Clock, Heart, Users, Shield, Zap, Globe } from 'lucide-react';
 
 const Facts = () => {
-  const navigate = useNavigate();
+  const facts = [
+    {
+      icon: Clock,
+      title: 'Every 2 Seconds',
+      description: 'Someone in the world needs blood. Your donation could be the difference between life and death.',
+      color: 'bg-red-500'
+    },
+    {
+      icon: Heart,
+      title: 'One Donation Saves 3 Lives',
+      description: 'A single blood donation can be separated into components helping multiple patients.',
+      color: 'bg-pink-500'
+    },
+    {
+      icon: Users,
+      title: '37% Population Can Donate',
+      description: 'Only 37% of the population is eligible to donate blood, making every donor incredibly valuable.',
+      color: 'bg-purple-500'
+    },
+    {
+      icon: Shield,
+      title: '100% Safe Process',
+      description: 'All equipment is sterile and used only once. Donating blood is completely safe.',
+      color: 'bg-blue-500'
+    },
+    {
+      icon: Zap,
+      title: 'Quick 10-Minute Process',
+      description: 'The actual blood donation takes just 10 minutes of your time to save lives.',
+      color: 'bg-green-500'
+    },
+    {
+      icon: Globe,
+      title: 'Global Impact',
+      description: 'Blood donations help in surgeries, cancer treatment, chronic illnesses, and traumatic injuries.',
+      color: 'bg-orange-500'
+    }
+  ];
 
   return (
-    <div className="flex flex-col md:flex-row items-center justify-center gap-8 p-6">
-      {/* Left Section: Text Content */}
-      <div className="w-full md:w-1/2">
-        <h1 className="text-center font-semibold text-2xl md:text-3xl mb-6">
-          Facts About Blood Donation
-        </h1>
-        <ul className="font-serif list-disc list-inside text-lg md:text-xl space-y-4">
-          <li>Every year, our nation requires about 5 crore units of blood, but only 2.5 crore units are available.</li>
-          <li>Blood is life—there is no substitute for it.</li>
-          <li>Every two seconds, someone needs blood.</li>
-          <li>Over 38,000 blood donations are needed daily.</li>
-          <li>A car accident victim may need up to 100 units of blood.</li>
-          <li>One blood donation can save up to three lives.</li>
-          <li>Blood cannot be manufactured; it can only be given by donors.</li>
-          <li>Regular blood donation helps improve heart health and reduces harmful iron levels.</li>
-          <li>Donating blood burns about 650 calories per donation.</li>
-          <li>Type O negative blood is the universal donor, while AB positive is the universal recipient.</li>
-        </ul>
-
-        {/* Button */}
-        <div className="flex justify-end mt-6">
-          <button
-            className="p-2 px-6 bg-black text-white rounded-lg hover:bg-red-700 transition-all"
-            onClick={() => navigate("/readmore")}
-          >
-            Read More
-          </button>
+    <section id="facts" className="py-10 bg-gray-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Section Header */}
+        <div className="text-center mb-16">
+          <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
+            Why Your Blood
+            <span className="block text-red-600">Donation Matters</span>
+          </h2>
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+            Understanding the critical importance of blood donation and how your contribution 
+            creates a ripple effect of healing and hope in our communities.
+          </p>
         </div>
-      </div>
 
-      {/* Right Section: Image */}
-      <div className="w-full md:w-1/2 flex justify-center">
-        <img src={img} alt="Facts" className="w-full h-auto max-w-md object-contain" />
+        {/* Facts Grid */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {facts.map((fact, index) => (
+            <div
+              key={index}
+              className="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100"
+            >
+              {/* Icon */}
+              <div className={`${fact.color} w-16 h-16 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
+                <fact.icon className="w-8 h-8 text-white" />
+              </div>
+
+              {/* Content */}
+              <h3 className="text-xl font-bold text-gray-900 mb-4 group-hover:text-red-600 transition-colors duration-200">
+                {fact.title}
+              </h3>
+              
+              <p className="text-gray-600 leading-relaxed">
+                {fact.description}
+              </p>
+
+              {/* Hover indicator */}
+              <div className="mt-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <div className="w-12 h-1 bg-gradient-to-r from-red-500 to-red-600 rounded-full"></div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="text-center mt-12">
+            <button className="bg-gray-900 hover:bg-gray-800 text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+              Learn More Facts
+            </button>
+          </div>
       </div>
-    </div>
+    </section>
   );
 };
 
