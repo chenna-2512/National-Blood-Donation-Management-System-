@@ -1,5 +1,13 @@
 import { useEffect, useState } from "react";
 import { ToastContainer } from "react-toastify";
+import {
+  Heart,
+  Droplets,
+  Shield,
+  Award,
+  Clock,
+  Calendar,
+} from "lucide-react";
 
 const Profile = () => {
   const [profileData, setProfileData] = useState(null);
@@ -79,8 +87,39 @@ const Profile = () => {
     }
   };
 
-  const handleEdit = () => setIsEditing(true);
+  const calculateAge = (dob) => {
+    const birth = new Date(dob);
+    const today = new Date();
+    let age = today.getFullYear() - birth.getFullYear();
+    const m = today.getMonth() - birth.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) age--;
+    return age;
+  };
 
+  const calculateNextEligibleDate = (lastDonation) => {
+    const lastDate = new Date(lastDonation);
+    const nextDate = new Date(lastDate);
+    nextDate.setDate(nextDate.getDate() + 56);
+    return nextDate.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+  };
+
+  const getBadges = (data) => {
+    const badges = [];
+    if (data.totalDonations >= 10)
+      badges.push({ icon: Award, label: "Gold Donor", color: "bg-yellow-500" });
+    if (data.totalDonations >= 5)
+      badges.push({ icon: Heart, label: "Frequent Donor", color: "bg-red-500" });
+    if (data.platelets === "Yes")
+      badges.push({ icon: Droplets, label: "Platelet Hero", color: "bg-blue-500" });
+    badges.push({ icon: Shield, label: "Verified Donor", color: "bg-green-500" });
+    return badges;
+  };
+
+  const handleEdit = () => setIsEditing(true);
   const handleCancel = () => {
     setIsEditing(false);
     setEditableData(profileData);
@@ -91,10 +130,7 @@ const Profile = () => {
     const { name, value } = e.target;
     const updatedData = { ...editableData, [name]: value };
     setEditableData(updatedData);
-
-    if (name === "lblooddonate") {
-      updateLBloodDate(value);
-    }
+    if (name === "lblooddonate") updateLBloodDate(value);
   };
 
   const handleSave = async () => {
@@ -102,7 +138,6 @@ const Profile = () => {
       setError("You must be logged in to update your profile.");
       return;
     }
-
     try {
       const response = await fetch(
         "https://national-blood-donation-management-system-y10q.onrender.com/updateprofile",
@@ -116,9 +151,7 @@ const Profile = () => {
         }
       );
 
-      if (!response.ok) {
-        throw new Error("Failed to update profile data");
-      }
+      if (!response.ok) throw new Error("Failed to update profile data");
 
       const updatedData = await response.json();
       setProfileData(updatedData.data);
@@ -132,111 +165,127 @@ const Profile = () => {
   };
 
   return (
-    <>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-red-50">
       <ToastContainer />
-      <div className="flex justify-center items-center min-h-screen bg-gradient-to-b from-gray-100 to-white p-6 mb-10">
-        <div className="max-w-2xl w-full bg-white shadow-2xl rounded-3xl p-8 border border-gray-200">
-          {loading && (
-            <p className="text-gray-500 text-center text-lg">Loading profile...</p>
-          )}
-          {error && (
-            <p className="text-red-500 text-center text-lg font-semibold">{error}</p>
-          )}
+      <div className="max-w-5xl mx-auto px-6 py-10">
+        {loading ? (
+          <p className="text-center text-gray-500 text-lg">Loading profile...</p>
+        ) : error ? (
+          <p className="text-center text-red-500 text-lg font-semibold">{error}</p>
+        ) : profileData ? (
+          <div className="space-y-8">
+            <div className="text-center">
+              <h1 className="text-4xl font-bold text-gray-900">Hello, {profileData.name.split(' ')[0]} 👋</h1>
+              <p className="text-xl text-gray-600 mt-2">You're an <span className="text-red-600 font-semibold">{profileData.bloodgroup}</span> Lifesaver 💉</p>
+              <p className="text-gray-600 mt-1">Thanks for your last donation on <span className="font-medium">{new Date(profileData.lblooddonate).toLocaleDateString()}</span>. You've saved <span className="font-bold text-red-600">{profileData.totalDonations * 3} lives</span> so far!</p>
+            </div>
 
-          {!token ? (
-            <p className="text-center text-gray-700 font-medium text-lg">
-              Please login first.
-            </p>
-          ) : profileData ? (
-            <>
-              <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center">
-                {isEditing ? "Edit Profile" : "Profile"}
-              </h2>
+            {/* Badges */}
+            <div className="flex flex-wrap gap-3 justify-center">
+              {getBadges(profileData).map((badge, i) => (
+                <span key={i} className={`text-white px-4 py-2 rounded-full flex items-center gap-2 text-sm font-semibold ${badge.color}`}>
+                  <badge.icon className="w-4 h-4" />
+                  {badge.label}
+                </span>
+              ))}
+            </div>
 
-              <div className="grid grid-cols-1 gap-6">
-                {[ 
-                  { label: "Name", key: "name", type: "text" },
-                  { label: "Email", key: "email", type: "email", disabled: true },
-                  { label: "Phone", key: "phoneno", type: "text" },
-                  { label: "Date of Birth", key: "dob", type: "text" },
-                  { label: "Gender", key: "gender", type: "select", options: ["Male", "Female", "Transgender"] },
-                  { label: "Last Blood Donation", key: "lblooddonate", type: "text" },
-                  { label: "Platelets Donation", key: "platelets", type: "select", options: ["Yes", "No"] },
-                  { label: "Socialize", key: "socialize", type: "select", options: ["Yes", "No"] },
-                  { label: "Blood Group", key: "bloodgroup", type: "select", options: ["A Positive", "A Negative", "B Positive", "B Negative", "AB Positive", "AB Negative", "O Positive", "O Negative"] },
-                  { label: "Address", key: "address", type: "text" },
-                  { label: "City", key: "city", type: "text" },
-                  { label: "State", key: "state", type: "text" },
-                  { label: "Pincode", key: "pincode", type: "text" },
-                ].map(({ label, key, type, options, disabled }) => (
-                  <div key={key} className="flex flex-col">
-                    <label className="text-gray-700 font-medium text-base mb-1">{label}:</label>
+            {/* Stats */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 text-center">
+              <div>
+                <Droplets className="mx-auto text-red-500" />
+                <p className="font-bold text-xl">{profileData.totalDonations}</p>
+                <p className="text-gray-600 text-sm">Total Donations</p>
+              </div>
+              <div>
+                <Heart className="mx-auto text-green-500" />
+                <p className="font-bold text-xl">{profileData.totalDonations * 3}</p>
+                <p className="text-gray-600 text-sm">Lives Saved</p>
+              </div>
+              <div>
+                <Clock className="mx-auto text-blue-500" />
+                <p className="font-bold text-xl">{Math.floor((new Date() - new Date(profileData.createdAt)) / (1000 * 60 * 60 * 24 * 30))}</p>
+                <p className="text-gray-600 text-sm">Months Active</p>
+              </div>
+              <div>
+                <Award className="mx-auto text-purple-500" />
+                <p className="font-bold text-xl">{getBadges(profileData).length}</p>
+                <p className="text-gray-600 text-sm">Badges Earned</p>
+              </div>
+            </div>
+
+            {/* Next Eligibility */}
+            <div className="bg-red-100 p-4 rounded-xl flex justify-between items-center">
+              <div>
+                <h3 className="text-lg font-bold text-gray-800">Next Donation Eligibility</h3>
+                <p className="text-sm text-gray-600">You can donate after <span className="text-red-600 font-medium">{calculateNextEligibleDate(profileData.lblooddonate)}</span></p>
+              </div>
+              <Calendar className="w-6 h-6 text-red-600" />
+            </div>
+
+            {/* Editable Cards */}
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="bg-white shadow-lg p-6 rounded-xl border">
+                <div className="flex justify-between items-center mb-4">
+                  <h3 className="text-lg font-bold text-gray-800">Personal Details</h3>
+                  {isEditing && <button onClick={handleCancel} className="text-sm text-red-600 hover:underline">Cancel</button>}
+                </div>
+                {["name","email","phoneno","dob","gender","bloodgroup"].map((field, i) => (
+                  <div key={i} className="mb-3">
+                    <label className="block text-sm text-gray-600 capitalize mb-1">{field.replace(/([A-Z])/g, ' $1')}:</label>
                     {isEditing ? (
-                      type === "select" ? (
-                        <select
-                          name={key}
-                          value={editableData[key] || "Select"}
-                          onChange={handleChange}
-                          disabled={key === "socialize" && !canEditSocialize}
-                          className={`border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200 ${
-                            key === "socialize" && !canEditSocialize ? "bg-gray-100 cursor-not-allowed" : ""
-                          }`}
-                        >
-                          {options.map((opt) => (
-                            <option key={opt} value={opt}>{opt}</option>
-                          ))}
-                        </select>
-                      ) : (
-                        <input
-                          type={type}
-                          name={key}
-                          value={editableData[key] || ""}
-                          onChange={handleChange}
-                          disabled={disabled}
-                          className={`border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200 ${
-                            disabled ? "bg-gray-100 cursor-not-allowed" : ""
-                          }`}
-                        />
-                      )
+                      <input
+                        type="text"
+                        name={field}
+                        value={editableData[field] || ""}
+                        onChange={handleChange}
+                        className="w-full border rounded-lg p-2 text-sm"
+                        disabled={field === 'email'}
+                      />
                     ) : (
-                      <p className="text-gray-800 text-base font-semibold bg-gray-50 p-2 rounded-md border border-gray-200">
-                        {profileData[key]}
-                      </p>
+                      <p className="bg-gray-50 p-2 rounded-md border text-sm">{profileData[field]}</p>
                     )}
                   </div>
                 ))}
               </div>
 
-              <div className="mt-8 flex justify-center space-x-4">
-                {isEditing ? (
-                  <>
-                    <button
-                      onClick={handleSave}
-                      className="bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700 transition-all duration-200"
-                    >
-                      Save
-                    </button>
-                    <button
-                      onClick={handleCancel}
-                      className="bg-gray-400 text-white px-5 py-2 rounded-lg hover:bg-gray-500 transition-all duration-200"
-                    >
-                      Cancel
-                    </button>
-                  </>
-                ) : (
-                  <button
-                    onClick={handleEdit}
-                    className="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition-all duration-200"
-                  >
-                    Edit
-                  </button>
-                )}
+              <div className="bg-white shadow-lg p-6 rounded-xl border">
+                <div className="flex justify-between items-center mb-4">
+                  <h3 className="text-lg font-bold text-gray-800">Location Details</h3>
+                </div>
+                {["address","city","state","pincode"].map((field, i) => (
+                  <div key={i} className="mb-3">
+                    <label className="block text-sm text-gray-600 capitalize mb-1">{field}:</label>
+                    {isEditing ? (
+                      <input
+                        type="text"
+                        name={field}
+                        value={editableData[field] || ""}
+                        onChange={handleChange}
+                        className="w-full border rounded-lg p-2 text-sm"
+                      />
+                    ) : (
+                      <p className="bg-gray-50 p-2 rounded-md border text-sm">{profileData[field]}</p>
+                    )}
+                  </div>
+                ))}
               </div>
-            </>
-          ) : null}
-        </div>
+            </div>
+
+            <div className="text-center mt-6">
+              {isEditing ? (
+                <>
+                  <button onClick={handleSave} className="bg-blue-600 text-white px-6 py-2 rounded-lg mr-4">Save</button>
+                  <button onClick={handleCancel} className="bg-gray-500 text-white px-6 py-2 rounded-lg">Cancel</button>
+                </>
+              ) : (
+                <button onClick={handleEdit} className="bg-green-600 text-white px-6 py-2 rounded-lg">Edit</button>
+              )}
+            </div>
+          </div>
+        ) : null}
       </div>
-    </>
+    </div>
   );
 };
 

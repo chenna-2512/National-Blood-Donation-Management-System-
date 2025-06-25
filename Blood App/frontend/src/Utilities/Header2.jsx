@@ -2,13 +2,13 @@ import { useState } from "react";
 import Profile from "../Utilities/Profile";
 import History from "./History";
 import Application from "../Components/Application";
-import { Menu, X } from "lucide-react"; // optional: install lucide-react for icons
+import { Menu, X, Heart } from "lucide-react";
 
 const Header2 = () => {
   const [showProfile, setShowProfile] = useState(false);
   const [showHistory, setShowHistory] = useState(false);
-  const [showApplication, setShowApplication] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false); // toggle for mobile menu
+  const [showApplication, setShowApplication] = useState(true);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const goToApplicationForm = () => {
     setShowApplication(true);
@@ -32,55 +32,107 @@ const Header2 = () => {
   };
 
   return (
-    <div>
-      <div className="mt-24 md:mt-24 lg:mt-16">
-        {/* Mobile Menu Button */}
-        <div className="sm:hidden flex px-4">
-          <button onClick={() => setMenuOpen(!menuOpen)} className="text-black">
-            {menuOpen ? <X size={28} /> : <Menu size={28} />}
-          </button>
-        </div>
+    <>
+      {/* Top Navigation Bar */}
+      <div className="fixed w-full z-50 bg-white border-b border-gray-200 shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16">
+            {/* Logo on the left */}
+            <div className="flex items-center space-x-2">
+              <div className="bg-red-600 p-2 rounded-full">
+                <Heart className="w-6 h-6 text-white fill-current" />
+              </div>
+              <span className="text-xl font-bold text-gray-900">BloodConnect</span>
+            </div>
 
-        {/* Menu Items */}
-        <div
-          className={`${
-            menuOpen ? "flex" : "hidden"
-          } sm:flex flex-col sm:flex-row items-center justify-center gap-5 p-2 font-semibold cursor-pointer`}
-        >
-          <h5
-            className={`text-center font-serif p-1 text-sm md:text-lg relative transition-all duration-500
-              before:content-[''] before:absolute before:left-0 before:bottom-0 before:h-[2px] before:bg-black before:transition-all before:duration-300
-              ${showProfile ? "before:w-full text-black font-bold" : "before:w-0 text-gray-600"}`}
-            onClick={goToProfile}
-          >
-            Profile
-          </h5>
+            {/* Tabs - Center Aligned on Desktop */}
+            <div className="hidden sm:flex gap-6">
+              <button
+                onClick={goToProfile}
+                className={`relative font-medium text-sm sm:text-base hover:text-red-600 transition-all duration-200 ${
+                  showProfile ? "text-red-600 font-semibold" : "text-gray-600"
+                }`}
+              >
+                Profile
+                {showProfile && (
+                  <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-red-600"></span>
+                )}
+              </button>
 
-          <h5
-            className={`text-center font-serif p-1 text-sm md:text-lg relative transition-all duration-500
-              before:content-[''] before:absolute before:left-0 before:bottom-0 before:h-[2px] before:bg-black before:transition-all before:duration-300
-              ${!showProfile && !showHistory ? "before:w-full text-black font-bold" : "before:w-0 text-gray-600"}`}
-            onClick={goToApplicationForm}
-          >
-            Application
-          </h5>
+              <button
+                onClick={goToApplicationForm}
+                className={`relative font-medium text-sm sm:text-base hover:text-red-600 transition-all duration-200 ${
+                  showApplication && !showProfile && !showHistory
+                    ? "text-red-600 font-semibold"
+                    : "text-gray-600"
+                }`}
+              >
+                Application
+                {showApplication && !showProfile && !showHistory && (
+                  <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-red-600"></span>
+                )}
+              </button>
 
-          <h5
-            className={`text-center font-serif p-1 text-sm md:text-lg relative transition-all duration-500
-              before:content-[''] before:absolute before:left-0 before:bottom-0 before:h-[2px] before:bg-black before:transition-all before:duration-300
-              ${showHistory ? "before:w-full text-black font-bold" : "before:w-0 text-gray-600"}`}
-            onClick={gotoHistory}
-          >
-            Donation History
-          </h5>
+              <button
+                onClick={gotoHistory}
+                className={`relative font-medium text-sm sm:text-base hover:text-red-600 transition-all duration-200 ${
+                  showHistory ? "text-red-600 font-semibold" : "text-gray-600"
+                }`}
+              >
+                Donation History
+                {showHistory && (
+                  <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-red-600"></span>
+                )}
+              </button>
+            </div>
+
+            {/* Mobile Toggle Button */}
+            <div className="sm:hidden">
+              <button onClick={() => setMenuOpen(!menuOpen)} className="text-gray-700">
+                {menuOpen ? <X size={26} /> : <Menu size={26} />}
+              </button>
+            </div>
+          </div>
+
+          {/* Mobile Dropdown */}
+          {menuOpen && (
+            <div className="flex flex-col sm:hidden gap-4 items-center py-4">
+              <button
+                onClick={goToProfile}
+                className={`font-medium ${
+                  showProfile ? "text-red-600 font-semibold" : "text-gray-600"
+                }`}
+              >
+                Profile
+              </button>
+              <button
+                onClick={goToApplicationForm}
+                className={`font-medium ${
+                  showApplication ? "text-red-600 font-semibold" : "text-gray-600"
+                }`}
+              >
+                Application
+              </button>
+              <button
+                onClick={gotoHistory}
+                className={`font-medium ${
+                  showHistory ? "text-red-600 font-semibold" : "text-gray-600"
+                }`}
+              >
+                Donation History
+              </button>
+            </div>
+          )}
         </div>
       </div>
 
-      {/* Component Rendering */}
-      {showApplication && <Application />}
-      {showProfile && <Profile />}
-      {showHistory && <History />}
-    </div>
+      {/* Page Content Below Header */}
+      <div className="pt-16">
+        {showApplication && <Application />}
+        {showProfile && <Profile />}
+        {showHistory && <History />}
+      </div>
+    </>
   );
 };
 

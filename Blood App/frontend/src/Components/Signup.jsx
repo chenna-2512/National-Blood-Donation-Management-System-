@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import login from "../assets/loginlogo.png";
 import emailjs from "@emailjs/browser";
 import Footer1 from "../Utilities/Footer1";
 import Heading from "../Utilities/Heading";
@@ -83,69 +82,84 @@ const SignUp = () => {
   };
 
   return (
-    <div>
-      <Heading />
-      <ToastContainer />
-      <div className="flex mt-24 mb-48 items-center justify-center border-2 border-gray-400 p-6 rounded-lg w-[90%] sm:w-[60%] mx-auto flex-col sm:flex-row">
-        <div className="text-center text-lg font-semibold font-serif flex flex-col justify-center w-[100%] sm:w-[40%]">
-          <img src={login} alt="Login" className="w-[50%] mx-auto" />
-          <h1 className="mt-2">Thanks for Choosing Us ..!</h1>
-          <p className="mt-1">
+  <div className="flex flex-col min-h-screen">
+    {/* Header */}
+    <Heading />
+    <ToastContainer />
+
+    {/* Main Content */}
+    <main className="flex-1 flex items-center justify-center bg-gradient-to-br from-gray-50 via-white to-red-50 px-4 py-8">
+      <div className="w-full sm:w-[80%] lg:w-[60%] bg-white shadow-lg rounded-3xl px-6 py-10 flex flex-col md:flex-row justify-between items-center border-2 border-red-200">
+        
+        {/* Left Side Quote */}
+        <div className="text-center md:w-1/2 px-4 mb-6 md:mb-0 space-y-4">
+          <h2 className="text-2xl font-semibold text-red-600">
+            Thanks for Choosing Us ❤️
+          </h2>
+          <p className="text-gray-700">
             Oh..! You Are New Here
-            <br />
+          </p>
+          <p className="font-medium text-gray-800">
             Please Sign Up to become a{" "}
             <span className="text-red-700 font-bold">DONOR</span>
           </p>
         </div>
-        <div className="w-[100%] sm:w-[40%] flex flex-col justify-center items-center sm:items-start">
+
+        {/* Right Side Form */}
+        <div className="md:w-1/2 w-full flex flex-col items-center space-y-4">
           <input
             type="email"
             placeholder="Enter Your Email"
-            className="w-[80%] sm:w-[80%] p-2 border-2 border-gray-400 rounded-lg"
+            className="w-[90%] p-3 border-2 border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500"
             onChange={(e) => setEmail(e.target.value)}
           />
           <input
             type="password"
             placeholder="Enter Your Password"
-            className="w-[80%] sm:w-[80%] p-2 border-2 border-gray-400 rounded-lg mt-2"
+            className="w-[90%] p-3 border-2 border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500"
             onChange={(e) => setPassword(e.target.value)}
           />
           <button
-            className="mt-4 bg-black p-2 text-white rounded-lg hover:bg-red-700 w-[50%] sm:w-[50%] cursor-pointer"
+            className="w-[90%] bg-red-600 hover:bg-red-700 text-white font-semibold py-3 rounded-xl transition-all duration-300"
             onClick={handleOtp}
           >
             Get OTP
           </button>
           <button
-            className="mt-2 p-2 border-b-3 font-semibold cursor-pointer text-sm text-black md:w-[50%] w-[70%]"
+            className="text-sm text-red-700 hover:underline"
             onClick={() => navigate("/login")}
           >
             Existing User? Login
           </button>
 
           {showOtp ? (
-            <div className="flex flex-col items-center">
+            <div className="w-full flex flex-col items-center space-y-3 mt-4">
               <input
                 type="text"
                 placeholder="Enter Your OTP"
-                className="w-full sm:w-[80%] p-2 border-2 border-gray-400 rounded-lg mt-4"
+                className="w-[90%] p-3 border-2 border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500"
                 onChange={(e) => setOtp(e.target.value)}
               />
               <button
-                className="mt-2 bg-black p-2 text-sm text-white rounded-lg hover:bg-red-700 w-full cursor-pointer"
+                className="w-[90%] bg-black hover:bg-red-700 text-white text-sm py-2 rounded-xl transition-all duration-300"
                 onClick={otpHandle}
               >
                 Validate OTP
               </button>
             </div>
           ) : (
-            <h1 className="mt-4 text-gray-500">OTP not sent yet</h1>
+            <></>
           )}
         </div>
       </div>
+    </main>
+
+    {/* Footer */}
+    <footer className="w-full">
       <Footer1 />
-    </div>
-  );
+    </footer>
+  </div>
+);
 };
 
 export default SignUp;

@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import login from "../assets/loginlogo.png";
 import Footer1 from "../Utilities/Footer1";
 import Heading from "../Utilities/Heading";
 import { useState } from "react";
@@ -39,48 +38,69 @@ const Login = () => {
   };
 
   return (
-    <div>
+  <>
+    <div className="flex flex-col min-h-screen">
+      {/* Header */}
       <Heading />
+
+      {/* Toast Notifications */}
       <ToastContainer />
-      <div className="flex mt-24 mb-30 items-center justify-center border-2 border-gray-400 p-6 rounded-lg w-[90%] sm:w-[60%] mx-auto flex-col sm:flex-row">
-        <div className="text-center text-lg font-semibold font-serif flex flex-col justify-center w-[100%] sm:w-[40%]">
-          <img src={login} alt="" className="w-[50%] mx-auto" />
-          <h1 className="mt-2">Thanks for Choosing Us ..!</h1>
-          <p className="mt-1">
-            We are happy to Welcome You ..! <br />
-            Please Login to become a <span className="text-red-700 font-bold">DONOR</span>
-          </p>
+
+      {/* Main Content Area */}
+      <main className="flex-1 flex items-center justify-center bg-gradient-to-br from-gray-50 via-white to-red-50 px-4 py-8">
+        <div className="w-full sm:w-[80%] lg:w-[60%] bg-white shadow-lg rounded-3xl px-6 py-10 flex flex-col md:flex-row justify-between items-center border-2 border-red-200">
+          {/* Left Side Text */}
+          <div className="text-center md:w-1/2 px-4 mb-6 md:mb-0 space-y-4">
+            <h2 className="text-2xl font-semibold text-red-600">
+              Welcome back, Lifesaver ❤️
+            </h2>
+            <p className="text-gray-700">
+              "One drop of blood can bring a lifetime of happiness to someone."
+            </p>
+            <p className="font-medium text-gray-800">
+              Join the mission. Be a{" "}
+              <span className="text-red-700 font-bold">DONOR</span>
+            </p>
+          </div>
+
+          {/* Right Side Form */}
+          <div className="md:w-1/2 w-full flex flex-col items-center space-y-4">
+            <input
+              type="email"
+              placeholder="Enter Your Email"
+              className="w-[90%] p-3 border-2 border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500"
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <input
+              type="password"
+              placeholder="Enter Your Password"
+              className="w-[90%] p-3 border-2 border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500"
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <button
+              className="w-[90%] bg-red-600 hover:bg-red-700 text-white font-semibold py-3 rounded-xl transition-all duration-300"
+              onClick={loginHandle}
+            >
+              Sign In
+            </button>
+            <button
+              onClick={() => navigate("/signup")}
+              className="text-sm text-red-700 hover:underline mt-2"
+            >
+              New User? Sign Up
+            </button>
+          </div>
         </div>
-        <div className="w-[100%] sm:w-[40%] flex flex-col justify-center items-center sm:items-start">
-          <input
-            type="email"
-            placeholder="Enter Your Email"
-            className="w-[80%] sm:w-[80%] p-2 border-2 border-gray-400 rounded-lg"
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <input
-            type="password"
-            placeholder="Enter Your Password"
-            className="w-[80%] sm:w-[80%] p-2 border-2 border-gray-400 rounded-lg mt-2"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <button
-            className="mt-4 bg-black p-2 text-white rounded-lg hover:bg-red-700 w-[50%] sm:w-[50%] cursor-pointer"
-            onClick={loginHandle}
-          >
-            Sign In
-          </button>
-          <button
-            className="mt-4 p-2 border-b-3 font-semibold md:text-lg text-sm cursor-pointer text-black lg:w-[50%] w-[60%]"
-            onClick={() => navigate("/signup")}
-          >
-            New User? Sign Up
-          </button>
-        </div>
-      </div>
-      <Footer1 />
+      </main>
+
+      {/* Footer */}
+      <footer className="w-full">
+        <Footer1 />
+      </footer>
     </div>
-  );
+  </>
+);
+
 };
 
 export default Login;

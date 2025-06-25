@@ -1,5 +1,3 @@
-import Heading from "../Utilities/Heading";
-import Footer1 from "../Utilities/Footer1";
 import { useEffect, useState } from "react";
 
 const Application = () => {
@@ -106,7 +104,6 @@ const Application = () => {
 
   return (
      <div>
-      <Heading />
       <h1 className="text-2xl font-serif font-bold text-center p-4 underline decoration-2 underline-offset-4 text-red-700">
         Application Form for Blood & Platelets Donation
       </h1>
@@ -212,8 +209,6 @@ const Application = () => {
           </button>
         </div>
       </div>
-
-      <Footer1 />
     </div>
   );
 };

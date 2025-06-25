@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { Heart } from 'lucide-react';
 
 const Heading = () => {
   const navigate = useNavigate();
@@ -8,15 +9,11 @@ const Heading = () => {
   };
 
   return (
-    <div>
-      <h3
-        className="fixed top-0 left-0 w-full bg-red-700 p-4 text-white text-lg md:text-2xl text-center font-serif font-bold cursor-pointer z-50"
-        onClick={goToHome}
-      >
-        National Blood Donation Management System
-        <br className="block md:hidden" />
-        <span className="hidden md:inline"> For A Self-Reliant India</span>
-      </h3>
+    <div className="flex items-center p-3 lg:pl-40 cursor-pointer space-x-2" onClick={goToHome}>
+      <div className="bg-red-600 p-2 rounded-full">
+        <Heart className="lg:w-6 lg:h-6 w-4 h-4 text-white fill-current" />
+      </div>
+      <span className="lg:text-xl font-bold text-gray-900">BloodConnect</span>
     </div>
   );
 };
