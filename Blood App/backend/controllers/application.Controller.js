@@ -8,6 +8,7 @@ export const postApplication = async (req, res) => {
             city, state, pincode, weight, height, lblooddonate, 
             platelets, socialize, typeofdonar, requestorEmail, message
         } = req.body; 
+         console.log("💾 Data Received:", req.body);
 
         if (!email) {
             return res.status(400).json({ message: "Email is required!" });
@@ -15,6 +16,7 @@ export const postApplication = async (req, res) => {
 
         const a_email = await Application.findOne({ email });
         if (a_email) {
+            console.log("🛑 Already exists, skipping save.");
             return res.status(200).json({ message: "User Profile Already Exists" });
         }
 
@@ -24,6 +26,7 @@ export const postApplication = async (req, res) => {
             platelets, socialize, typeofdonar, requestorEmail, message
         });
 
+        console.log("✅ Final Object to Save: ", ApplicationDetails);
         await ApplicationDetails.save();
 
         res.status(201).json({ message: "Profile Saved Successfully" });

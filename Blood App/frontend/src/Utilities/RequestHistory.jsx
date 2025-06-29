@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import emailjs from "@emailjs/browser";
 import { id } from "../assets/id";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
 
 const SERVICE_ID = id.service_id;
 const TEMPLATE_YES_ID = id.template_id;
@@ -29,7 +30,7 @@ const RequestHistory = () => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token || !loggedEmail) {
-      alert("Please login first");
+      toast.error("Please login first");
       return;
     }
 
@@ -42,7 +43,7 @@ const RequestHistory = () => {
 
         const data = await response.json();
         if (!data.data || data.data.length === 0) {
-          alert("You don’t have any donors");
+          toast.error("You don’t have any donors");
         } else {
           setDonorData(data.data);
         }
@@ -72,7 +73,7 @@ const RequestHistory = () => {
       message: message,
       from_email: loggedEmail,
       website_link: "https://bloodconnect.in",
-      company_phone: "+91 9876543210",
+      company_phone: "+91 8317547212",
       company_email: "support@bloodconnect.in",
       user_unsubscribe: "https://bloodconnect.in/unsubscribe",
     };
@@ -92,14 +93,18 @@ const RequestHistory = () => {
         "https://national-blood-donation-management-system-y10q.onrender.com/updatedate",
         {
           email: donor.email,
-          lblooddonate: new Date().toISOString().split("T")[0], // Format: YYYY-MM-DD
+          lblooddonate: new Date().toISOString().split("T")[0], 
         }
       );
-      alert("✅ Thank you email sent!");
+      let noofDonations = localStorage.getItem("totalDonaton");
+      noofDonations = noofDonations + 1;
+      localStorage.setItem("totalDonations",noofDonations);
+
+      toast.success("✅ Thank you email sent!");
       updateClickedStates(donor.email);
     } catch (error) {
       console.error("Failed to send email:", error);
-      alert("❌ Failed to send email. Please try again later.");
+      toast.error("❌ Failed to send email. Please try again later.");
     }
   };
 
@@ -138,6 +143,7 @@ const RequestHistory = () => {
 
   return (
     <div className="min-h-screen bg-gray-100 py-8 px-4 sm:px-6 lg:px-8">
+      <ToastContainer/>
       <h2 className="text-3xl font-bold text-center text-red-600 mb-8">
         🩸 Request History
       </h2>

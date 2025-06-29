@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const History = () => {
   const token = localStorage.getItem("token");
   const loggedEmail = localStorage.getItem("userEmail");
 
+  const navigate = useNavigate();
   const [requestData, setRequestData] = useState([]);
   const [showData, setShowData] = useState(false);
   const [shownoData, setNoShowData] = useState(false);
@@ -13,20 +15,9 @@ const History = () => {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(true);
 
-  const [hasResponded, setHasResponded] = useState(() => {
-    if (!loggedEmail) return false;
-    return localStorage.getItem(`hasResponded_${loggedEmail}`) === "true";
-  });
-
-  const [submittedMessage, setSubmittedMessage] = useState(() => {
-    if (!loggedEmail) return "";
-    return localStorage.getItem(`submittedMessage_${loggedEmail}`) || "";
-  });
-
-  const [responseGiven, setResponseGiven] = useState(() => {
-    if (!loggedEmail) return false;
-    return localStorage.getItem(`responseGiven_${loggedEmail}`) === "true";
-  });
+  const [hasResponded, setHasResponded] = useState(false);
+  const [responseGiven, setResponseGiven] = useState(false);
+  const [submittedMessage, setSubmittedMessage] = useState("");
 
   const handleChange = () => {
     setShowData(true);
@@ -45,13 +36,8 @@ const History = () => {
   };
 
   useEffect(() => {
-    if (!token) {
+    if (!token || !loggedEmail) {
       alert("Please login first");
-      return;
-    }
-
-    if (!loggedEmail) {
-      alert("Login first");
       return;
     }
 
@@ -77,19 +63,26 @@ const History = () => {
         const data = await response.json();
         console.log("Fetched Data:", data);
 
-        if (data.data.donorEmail !== loggedEmail) {
+        if (data?.data?.donorEmail !== loggedEmail) {
           alert("You don't have any requests");
         } else {
+          const requestor = data.data.email;
           setRequestData([data.data]);
-          setRequestorEmail(data.data.email);
+          setRequestorEmail(requestor);
 
-          // Reset response state if this is a new request from the same donor
-          if (data.data.email !== requestorEmail) {
+          // Check if it's a new requestor and reset flags
+          const prevRequestor = localStorage.getItem("prevRequestorEmail");
+          if (prevRequestor !== requestor) {
+            console.log("🔁 New requestor detected. Resetting flags.");
             setHasResponded(false);
+            setResponseGiven(false);
+            localStorage.setItem("prevRequestorEmail", requestor);
             localStorage.setItem(`hasResponded_${loggedEmail}`, "false");
-            setShowData(false);
-            setNoShowData(false);
-            setShowSocialize(false);
+            localStorage.setItem(`responseGiven_${loggedEmail}`, "false");
+          } else {
+            setHasResponded(localStorage.getItem(`hasResponded_${loggedEmail}`) === "true");
+            setResponseGiven(localStorage.getItem(`responseGiven_${loggedEmail}`) === "true");
+            setSubmittedMessage(localStorage.getItem(`submittedMessage_${loggedEmail}`) || "");
           }
         }
       } catch (error) {
@@ -99,7 +92,7 @@ const History = () => {
     };
 
     fetchRequest();
-  }, [token, loggedEmail, requestorEmail]); // Add requestorEmail to dependencies
+  }, [token, loggedEmail]);
 
   const handleSubmit = async () => {
     if (!token || !loggedEmail) {
@@ -110,19 +103,22 @@ const History = () => {
     const socializeValue = showSocialize ? "no" : "yes";
 
     try {
-      await axios.put("https://national-blood-donation-management-system-y10q.onrender.com/updateMessage", {
-        email: loggedEmail,
-        requestorEmail,
-        message,
-        socialize: socializeValue,
-      });
+      await axios.put(
+        "https://national-blood-donation-management-system-y10q.onrender.com/updateMessage",
+        {
+          email: loggedEmail,
+          requestorEmail,
+          message,
+          socialize: socializeValue,
+        }
+      );
       alert("Message sent successfully!");
 
       setHasResponded(true);
       setSubmittedMessage(message);
-
       localStorage.setItem(`hasResponded_${loggedEmail}`, "true");
       localStorage.setItem(`submittedMessage_${loggedEmail}`, message);
+      navigate("/")
     } catch (error) {
       console.log("Error updating Socialize:", error);
     }

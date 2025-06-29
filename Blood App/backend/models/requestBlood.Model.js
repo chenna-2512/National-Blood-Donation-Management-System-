@@ -9,6 +9,8 @@ const requestBlood = mongoose.Schema({
     date : { type : String, required : true },
     platelets : { type : String, required : true },
     donorEmail : { type : String, required : true },
+    units : { type : Number, required : true },
+    urgencylevel : { type : String, required : true },
 })
 
 export const BloodApplication = mongoose.model("BloodApplication",requestBlood);

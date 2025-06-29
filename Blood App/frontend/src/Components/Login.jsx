@@ -55,7 +55,7 @@ const Login = () => {
               Welcome back, Lifesaver ❤️
             </h2>
             <p className="text-gray-700">
-              "One drop of blood can bring a lifetime of happiness to someone."
+              &quot;One drop of blood can bring a lifetime of happiness to someone.&quot;
             </p>
             <p className="font-medium text-gray-800">
               Join the mission. Be a{" "}

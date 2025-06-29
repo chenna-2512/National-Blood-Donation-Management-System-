@@ -3,8 +3,10 @@ import Profile from "../Utilities/Profile";
 import History from "./History";
 import Application from "../Components/Application";
 import { Menu, X, Heart } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const Header2 = () => {
+  const navigate = useNavigate();
   const [showProfile, setShowProfile] = useState(false);
   const [showHistory, setShowHistory] = useState(false);
   const [showApplication, setShowApplication] = useState(true);
@@ -30,6 +32,11 @@ const Header2 = () => {
     setShowApplication(false);
     setMenuOpen(false);
   };
+  
+  const goToHome = () => {
+    navigate("/");
+  };
+
 
   return (
     <>
@@ -38,7 +45,7 @@ const Header2 = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo on the left */}
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-2 cursor-pointer" onClick={goToHome}>
               <div className="bg-red-600 p-2 rounded-full">
                 <Heart className="w-6 h-6 text-white fill-current" />
               </div>
@@ -49,7 +56,7 @@ const Header2 = () => {
             <div className="hidden sm:flex gap-6">
               <button
                 onClick={goToProfile}
-                className={`relative font-medium text-sm sm:text-base hover:text-red-600 transition-all duration-200 ${
+                className={`relative font-medium text-sm sm:text-base hover:text-red-600 transition-all duration-200 cursor-pointer ${
                   showProfile ? "text-red-600 font-semibold" : "text-gray-600"
                 }`}
               >
@@ -61,7 +68,7 @@ const Header2 = () => {
 
               <button
                 onClick={goToApplicationForm}
-                className={`relative font-medium text-sm sm:text-base hover:text-red-600 transition-all duration-200 ${
+                className={`relative font-medium text-sm sm:text-base hover:text-red-600 transition-all duration-200 cursor-pointer ${
                   showApplication && !showProfile && !showHistory
                     ? "text-red-600 font-semibold"
                     : "text-gray-600"
@@ -75,7 +82,7 @@ const Header2 = () => {
 
               <button
                 onClick={gotoHistory}
-                className={`relative font-medium text-sm sm:text-base hover:text-red-600 transition-all duration-200 ${
+                className={`relative font-medium text-sm sm:text-base hover:text-red-600 transition-all duration-200 cursor-pointer ${
                   showHistory ? "text-red-600 font-semibold" : "text-gray-600"
                 }`}
               >

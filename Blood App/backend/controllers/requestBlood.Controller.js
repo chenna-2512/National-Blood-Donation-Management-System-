@@ -2,7 +2,7 @@ import { BloodApplication } from "../models/requestBlood.Model.js";
 
 export const bloodRequest = async (req,res) => {
     try{
-        const { name , gender, email, phoneno, address, date, platelets, donorEmail } = req.body;
+        const { name , gender, email, phoneno, address, date, platelets, donorEmail, units, urgencylevel } = req.body;
 
         if(!email){
             return res.status(400).json({
@@ -27,6 +27,8 @@ export const bloodRequest = async (req,res) => {
             date : date,
             platelets : platelets,
             donorEmail : donorEmail,
+            units : units,
+            urgencylevel : urgencylevel,
         })
 
         newBlood.save();

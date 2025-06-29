@@ -1,6 +1,7 @@
 // import React from 'react'
 import Facts from "../Utilities/Facts"
-import Footer1 from "../Utilities/Footer"
+import Footer from "../Utilities/Footer"
+import Footer2 from "../Utilities/Footer2"
 import Header from "../Utilities/Header"
 // import Heading from "../Utilities/Heading"
 import Info from "../Utilities/Info"
@@ -13,7 +14,8 @@ const LandingPage = () => {
       <Info/>
       <Facts/>
       <Message/>
-      <Footer1/>
+      <Footer/>
+      <Footer2/>
     </div>
   )
 }
