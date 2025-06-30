@@ -21,9 +21,17 @@ const Header = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const gotoaboutus = () => {
+    navigate('/aboutus');
+  };
+
+  const goToHome = () =>{
+    navigate('/');
+  }
+
   const navItems = [
     { label: 'Home', href: '/' },
-    { label: 'About', href: '/aboutus' },
+    { label: 'About', action: gotoaboutus },
     { label: 'Facts', href: '#facts' },
     { label: 'Stories', href: '#stories' },
     { label: 'Contact', href: '#contact' },
@@ -51,7 +59,7 @@ const Header = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-2 cursor-pointer" onClick={goToHome}>
             <div className="bg-red-600 p-2 rounded-full">
               <Heart className="w-6 h-6 text-white fill-current" />
             </div>
@@ -60,16 +68,27 @@ const Header = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
-            {navItems.map((item) => (
-              <a
-                key={item.label}
-                href={item.href}
-                className="text-gray-700 hover:text-red-600 transition-colors duration-200 font-medium relative group"
-              >
-                {item.label}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-red-600 transition-all duration-200 group-hover:w-full"></span>
-              </a>
-            ))}
+            {navItems.map((item) =>
+              item.action ? (
+                <button
+                  key={item.label}
+                  onClick={item.action}
+                  className="text-gray-700 hover:text-red-600 transition-colors duration-200 font-medium relative group"
+                >
+                  {item.label}
+                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-red-600 transition-all duration-200 group-hover:w-full"></span>
+                </button>
+              ) : (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  className="text-gray-700 hover:text-red-600 transition-colors duration-200 font-medium relative group"
+                >
+                  {item.label}
+                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-red-600 transition-all duration-200 group-hover:w-full"></span>
+                </a>
+              )
+            )}
           </nav>
 
           {/* Login/Logout Button */}
@@ -99,16 +118,29 @@ const Header = () => {
         {isMenuOpen && (
           <div className="md:hidden bg-white border-t border-gray-100 py-4">
             <nav className="flex flex-col space-y-4">
-              {navItems.map((item) => (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  className="text-gray-700 hover:text-red-600 px-4 py-2 transition-colors duration-200"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {item.label}
-                </a>
-              ))}
+              {navItems.map((item) =>
+                item.action ? (
+                  <button
+                    key={item.label}
+                    onClick={() => {
+                      item.action();
+                      setIsMenuOpen(false);
+                    }}
+                    className="text-left text-gray-700 hover:text-red-600 px-4 py-2 transition-colors duration-200"
+                  >
+                    {item.label}
+                  </button>
+                ) : (
+                  <a
+                    key={item.label}
+                    href={item.href}
+                    className="text-gray-700 hover:text-red-600 px-4 py-2 transition-colors duration-200"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {item.label}
+                  </a>
+                )
+              )}
               <button
                 onClick={handleAuth}
                 className="mx-4 bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-full font-semibold transition-colors duration-200"

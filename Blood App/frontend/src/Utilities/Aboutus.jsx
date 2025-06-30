@@ -1,4 +1,3 @@
-// import React from 'react'
 import Heading from "../Utilities/Heading"
 import Footer1 from "../Utilities/Footer1"
 
@@ -6,7 +5,7 @@ const Aboutus = () => {
   return (
     <div>
       <Heading/>
-      <div className="bg-white text-gray-800 py-12 px-6 mt-15 mb-14 md:px-20">
+      <div className="bg-white text-gray-800 py-12 px-6 mb-14 md:px-20">
         <div className="max-w-5xl mx-auto">
           <h2 className="text-4xl font-bold mb-6 text-red-600">🩸 About Us</h2>
           

@@ -86,7 +86,7 @@ const Application = () => {
         throw new Error(responseData.message || "Failed to submit form.");
       }
 
-      localStorage.setItem("totalDonations",0);
+      localStorage.setItem("totalDonations",1);
       localStorage.setItem("createdAt",new Date().toISOString().split("T")[0]);
 
       toast.success("Form submitted successfully!");

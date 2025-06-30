@@ -1,6 +1,13 @@
 import { Clock, Heart, Users, Shield, Zap, Globe } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const Facts = () => {
+
+  const navigate = useNavigate();
+
+  const gotoreadmore = () => {
+    navigate('/readmore');
+  }
   const facts = [
     {
       icon: Clock,
@@ -85,8 +92,10 @@ const Facts = () => {
         </div>
 
         <div className="text-center mt-12">
-            <button className="bg-gray-900 hover:bg-gray-800 text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
-              Learn More Facts
+            <button 
+              className="bg-gray-900 hover:bg-gray-800 text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+              onClick={gotoreadmore}>
+                Learn More Facts
             </button>
           </div>
       </div>
