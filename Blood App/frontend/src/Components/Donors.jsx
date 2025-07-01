@@ -22,7 +22,6 @@ const Donors = () => {
   const donor = location?.state?.donor;
   console.log(donor);
 
-  const totalDonations = localStorage.getItem("totalDonations")
 
   const userEmail = localStorage.getItem("userEmail");
   const navigate = useNavigate();
@@ -103,7 +102,7 @@ const Donors = () => {
                 </div>
                 <div className="mt-4 grid grid-cols-2 gap-4 text-center">
                   <div>
-                    <div className="text-xl font-bold">{totalDonations}</div>
+                    <div className="text-xl font-bold">{donor.totalDonations}</div>
                     <div className="text-sm text-red-200">Total Donations</div>
                   </div>
                   <div>
@@ -206,7 +205,7 @@ const Donors = () => {
                       <TrendingUp className="w-4 h-4 mr-2" />
                       Total Donations
                     </span>
-                    <span className="font-semibold text-gray-900">{totalDonations}</span>
+                    <span className="font-semibold text-gray-900">{donor.totalDonations}</span>
                   </div>
                 </div>
               </div>

@@ -94,11 +94,9 @@ const RequestHistory = () => {
         {
           email: donor.email,
           lblooddonate: new Date().toISOString().split("T")[0], 
+          totalDonations : donor.totalDonations,
         }
       );
-      let noofDonations = localStorage.getItem("totalDonaton");
-      noofDonations = noofDonations + 1;
-      localStorage.setItem("totalDonations",noofDonations);
 
       toast.success("✅ Thank you email sent!");
       updateClickedStates(donor.email);

@@ -13,7 +13,6 @@ const Donorpage = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [selectedGroup, setSelectedGroup] = useState("All");
   const [selectedCity, setSelectedCity] = useState("All");
-  const totalDonations = localStorage.getItem("totalDonations");
   const navigate = useNavigate();
   
 
@@ -217,7 +216,7 @@ const Donorpage = () => {
       {filteredDonors.length > 0 ? (
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredDonors.map((donor, index) => {
-            const level = getDonorLevel(totalDonations || 0);
+            const level = getDonorLevel(donor.totalDonations || 0);
             return (
               <div
                 key={index}
@@ -245,7 +244,7 @@ const Donorpage = () => {
                 </div>
                 <div className="grid grid-cols-2 gap-4 mb-6">
                   <div className="text-center">
-                    <div className="text-lg font-bold text-gray-900">{totalDonations}</div>
+                    <div className="text-lg font-bold text-gray-900">{donor.totalDonations}</div>
                     <div className="text-xs text-gray-500">Total Donations</div>
                   </div>
                   <div className="text-center">
