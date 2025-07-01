@@ -4,6 +4,8 @@ export const bloodRequest = async (req,res) => {
     try{
         const { name , gender, email, phoneno, address, date, platelets, donorEmail, units, urgencylevel } = req.body;
 
+        console.log("Request Data : ", req.body);
+
         if(!email){
             return res.status(400).json({
                 message : "Please Login",
@@ -31,7 +33,10 @@ export const bloodRequest = async (req,res) => {
             urgencylevel : urgencylevel,
         })
 
+        
+        
         newBlood.save();
+        console.log("Request Data : ", newBlood);
 
         return res.status(200).json({
             message : "Blood Request Sent Successfully",

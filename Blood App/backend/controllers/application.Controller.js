@@ -6,7 +6,7 @@ export const postApplication = async (req, res) => {
         const { 
             name, dob, gender, bloodgroup, email, phoneno, address, 
             city, state, pincode, weight, height, lblooddonate, 
-            platelets, socialize, typeofdonar, requestorEmail, message
+            platelets, socialize, typeofdonar, requestorEmail, message, totalDonations, createdAt
         } = req.body; 
          console.log("💾 Data Received:", req.body);
 
@@ -23,7 +23,7 @@ export const postApplication = async (req, res) => {
         const ApplicationDetails = new Application({
             name, dob, gender, bloodgroup, email, phoneno, address,
             city, state, pincode, weight, height, lblooddonate,
-            platelets, socialize, typeofdonar, requestorEmail, message
+            platelets, socialize, typeofdonar, requestorEmail, message, totalDonations, createdAt
         });
 
         console.log("✅ Final Object to Save: ", ApplicationDetails);
@@ -273,7 +273,7 @@ export const getRequestor = async (req, res) => {
 
   export const updateLbloodDate = async(req,res) => {
     try{
-        const { email , lblooddonate } = req.body;
+        const { email , lblooddonate, totalDonations } = req.body;
         if(!email){
             return res.status(400).json({
                 message:"Please Check Once"
@@ -287,6 +287,7 @@ export const getRequestor = async (req, res) => {
         };
 
         user.lblooddonate = lblooddonate;
+        user.totalDonations = totalDonations+1;
         
         await user.save();
 

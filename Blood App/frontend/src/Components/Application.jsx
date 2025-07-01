@@ -6,7 +6,7 @@ const Application = () => {
   const [formData, setFormData] = useState({
     name: "", dob: "", email: "", phoneno: "", city: "", state: "", pincode: "",
     weight: "", height: "", lblooddonate: "", gender: "", bloodgroup: "",
-    address: "", platelets: "", socialize: "", typeofdonar: "", requestorEmail: "", message: "", 
+    address: "", platelets: "", socialize: "", typeofdonar: "", requestorEmail: "", message: "", totalDonations: "", createdAt: "",
   });
 
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -28,7 +28,7 @@ const Application = () => {
         socialize : "No",
         requestorEmail : "NA",
         message : "NA",
-        totalDonations : 0,
+        totalDonations : 1,
         createdAt : new Date().toISOString().split("T")[0],
       }));
     }
@@ -86,14 +86,11 @@ const Application = () => {
         throw new Error(responseData.message || "Failed to submit form.");
       }
 
-      localStorage.setItem("totalDonations",1);
-      localStorage.setItem("createdAt",new Date().toISOString().split("T")[0]);
-
       toast.success("Form submitted successfully!");
       setFormData({
         name: "", dob: "", email: "", phoneno: "", city: "", state: "", pincode: "",
         weight: "", height: "", lblooddonate: "", gender: "", bloodgroup: "",
-        address: "", platelets: "", socialize: "", typeofdonar: "",requestorEmail: "NA", message: "NA", 
+        address: "", platelets: "", socialize: "", typeofdonar: "",requestorEmail: "NA", message: "NA", totalDonations : "", createdAt : "",
       });
 
     } catch (error) {

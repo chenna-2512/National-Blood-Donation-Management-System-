@@ -18,8 +18,6 @@ const Profile = () => {
   const [canEditSocialize, setCanEditSocialize] = useState(false);
 
   const token = localStorage.getItem("token");
-  const noofDonations = localStorage.getItem("totalDonations");
-  const createdProfile = localStorage.getItem("createdAt");
 
   useEffect(() => {
     if (!token) {
@@ -111,9 +109,9 @@ const Profile = () => {
 
   const getBadges = (data) => {
     const badges = [];
-    if (noofDonations >= 10)
+    if (profileData.totalDonations >= 10)
       badges.push({ icon: Award, label: "Gold Donor", color: "bg-yellow-500" });
-    if (noofDonations >= 5)
+    if (profileData.totalDonations >= 5)
       badges.push({ icon: Heart, label: "Frequent Donor", color: "bg-red-500" });
     if (data.platelets === "Yes")
       badges.push({ icon: Droplets, label: "Platelet Hero", color: "bg-blue-500" });
@@ -179,7 +177,7 @@ const Profile = () => {
             <div className="text-center">
               <h1 className="text-4xl font-bold text-gray-900">Hello, {profileData.name.split(' ')[0]} 👋</h1>
               <p className="text-xl text-gray-600 mt-2">You&apos;re an <span className="text-red-600 font-semibold">{profileData.bloodgroup}</span> Lifesaver 💉</p>
-              <p className="text-gray-600 mt-1">Thanks for your last donation on <span className="font-medium">{new Date(profileData.lblooddonate).toLocaleDateString()}</span>. You&apos;ve saved <span className="font-bold text-red-600">{noofDonations * 3} lives</span> so far!</p>
+              <p className="text-gray-600 mt-1">Thanks for your last donation on <span className="font-medium">{new Date(profileData.lblooddonate).toLocaleDateString()}</span>. You&apos;ve saved <span className="font-bold text-red-600">{profileData.totalDonations * 3} lives</span> so far!</p>
             </div>
 
             {/* Badges */}
@@ -196,17 +194,17 @@ const Profile = () => {
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 text-center">
               <div>
                 <Droplets className="mx-auto text-red-500" />
-                <p className="font-bold text-xl">{noofDonations}</p>
+                <p className="font-bold text-xl">{profileData.totalDonations}</p>
                 <p className="text-gray-600 text-sm">Total Donations</p>
               </div>
               <div>
                 <Heart className="mx-auto text-green-500" />
-                <p className="font-bold text-xl">{noofDonations * 3}</p>
+                <p className="font-bold text-xl">{profileData.totalDonations * 3}</p>
                 <p className="text-gray-600 text-sm">Lives Saved</p>
               </div>
               <div>
                 <Clock className="mx-auto text-blue-500" />
-                <p className="font-bold text-xl">{Math.floor((new Date() - new Date(createdProfile)) / (1000 * 60 * 60 * 24 * 30))}</p>
+                <p className="font-bold text-xl">{Math.floor((new Date() - new Date(profileData.createdAt)) / (1000 * 60 * 60 * 24 * 30))}</p>
                 <p className="text-gray-600 text-sm">Months Active</p>
               </div>
               <div>
@@ -232,7 +230,7 @@ const Profile = () => {
                   <h3 className="text-lg font-bold text-gray-800">Personal Details</h3>
                   {isEditing && <button onClick={handleCancel} className="text-sm text-red-600 hover:underline">Cancel</button>}
                 </div>
-                {["name","email","phoneno","dob","gender","bloodgroup","socialize"].map((field, i) => (
+                {["name","email","phoneno","dob","gender","bloodgroup","socialize","lblooddonate"].map((field, i) => (
                   <div key={i} className="mb-3">
                     <label className="block text-sm text-gray-600 capitalize mb-1">{field.replace(/([A-Z])/g, ' $1')}:</label>
                     {isEditing ? (

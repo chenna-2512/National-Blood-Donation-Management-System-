@@ -56,6 +56,8 @@ const RequestApplication = () => {
       units: Number(units),
     };
 
+
+    console.log("Response Data: ", formData);
     console.log("Sending payload:", payload);
 
     try {

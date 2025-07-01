@@ -19,6 +19,8 @@ const application = mongoose.Schema({
     typeofdonar : { type : String, required : true },
     requestorEmail : { type : String, required : true },
     message : { type : String , required : true },
+    totalDonations : { type : Number, required : true },
+    createdAt : { type : String , required : true },
 })
 
 export const Application = mongoose.model("Application",application);
