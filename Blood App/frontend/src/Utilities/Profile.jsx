@@ -242,7 +242,8 @@ const Profile = () => {
                         value={editableData[field] || ""}
                         onChange={handleChange}
                         className="w-full border rounded-lg p-2 text-sm"
-                        disabled={field === 'email'}
+                        disabled={field === 'email' || 
+          (field === 'socialize' && !canEditSocialize)}
                       />
                     ) : (
                       <p className="bg-gray-50 p-2 rounded-md border text-sm">{profileData[field]}</p>
